@@ -1,4 +1,4 @@
-# ![Image](example/assets/instagram.png) Instagram PHP API V2
+#Instagram PHP API V2
 
 > **Note:** On the 17 Nov 2015 [Instagram](http://developers.instagram.com/post/133424514006/instagram-platform-update) made [changes to their API ](https://instagram.com/developer/changelog/). Apps created before Nov 17, 2015 wont be affected until Jun 2016. Apps created on or after Nov 17 2015 will require to use their updated API. Please note that this library doesn't yet support their new updates. For more information, please see [#182](https://github.com/cosenary/Instagram-PHP-API/issues/182).
 
