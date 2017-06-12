@@ -71,7 +71,7 @@ class Instagram
      *
      * @var string[]
      */
-    private $_scopes = array('basic', 'likes', 'comments', 'relationships');
+    private $_scopes = array('basic','public_content','follower_list', 'likes', 'comments', 'relationships');
 
     /**
      * Available actions.
@@ -202,7 +202,17 @@ class Instagram
             $params['count'] = $limit;
         }
 
-        return $this->_makeCall('users/' . $id . '/media/recent', strlen($this->getAccessToken()), $params);
+        return $this->_makeCall('users/' . $id . '/media/recent', true, $params);
+    }
+
+    /**
+    * Get media by its shortcode
+    *
+    * @param string $shortcode                   Instagram Shortcode
+    * @return mixed
+    */
+    public function getMediaShortcode($shortcode) {
+        return $this->_makeCall('media/shortcode/' . $shortcode, true);
     }
 
     /**
@@ -355,7 +365,7 @@ class Instagram
      */
     public function searchTags($name)
     {
-        return $this->_makeCall('tags/search', false, array('q' => $name));
+        return $this->_makeCall('tags/search', true, array('q' => $name));
     }
 
     /**
@@ -367,7 +377,7 @@ class Instagram
      */
     public function getTag($name)
     {
-        return $this->_makeCall('tags/' . $name);
+        return $this->_makeCall('tags/' . $name, true);
     }
 
     /**
@@ -386,7 +396,7 @@ class Instagram
             $params['count'] = $limit;
         }
 
-        return $this->_makeCall('tags/' . $name . '/media/recent', false, $params);
+        return $this->_makeCall('tags/' . $name . '/media/recent', true, $params);
     }
 
     /**
@@ -575,7 +585,7 @@ class Instagram
      */
     protected function _makeCall($function, $auth = false, $params = null, $method = 'GET')
     {
-        if (!$auth) {
+        if (false === $auth && !isset($this->_accesstoken)) {
             // if the call doesn't requires authentication
             $authMethod = '?client_id=' . $this->getApiKey();
         } else {
